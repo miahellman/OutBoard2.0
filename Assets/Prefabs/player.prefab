@@ -121,7 +121,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.30664766}
+  m_Offset: {x: 0.00962171, y: -0.30664766}
   m_SpriteTilingProperty:
     border: {x: 0.25, y: 0.25, z: 0.25, w: 0.25}
     pivot: {x: 0.5, y: 0.5}
@@ -132,7 +132,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.4389949}
+  m_Size: {x: 0.69210607, y: 0.43899488}
   m_EdgeRadius: 0
 --- !u!114 &1875714161753982778
 MonoBehaviour:
@@ -147,10 +147,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadManager: {fileID: 0}
+  camShake: {fileID: 0}
   speedUpMultiplier: 0.2
+  timer: {fileID: 0}
   centrifugalForceMultiplier: 0.265
   moveSpeed: 5
   hitSpeed: 1
   hitSpeedTimerMax: 10
+  gradualSpeedMultiplier: 0
+  timerGradSpeedMax: 0
+  hitNoise: {fileID: 0}
   hitObstacle: 0
+  healthMax: 0
+  health: 0
   speedUp: 0

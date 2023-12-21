@@ -25,8 +25,8 @@ public class ImageEffectLensMod : MonoBehaviour
     float currentDistort;
 
     //vignette shader variable
-    float maxRadius = 0.83f;
-    float minRadius = 0.949f;
+    float maxRadius = 0.73f;
+    float minRadius = 0.83f;
     float currentRadius;
 
     float saturation = 1f;
@@ -67,17 +67,17 @@ public class ImageEffectLensMod : MonoBehaviour
 
         if (playerController.hitObstacle == true)
         {
-            threshold = 0.13f;
-            saturation = .5f;
+            threshold = 0.23f;
+            saturation = .4f;
         } 
         else if (playerController.health < playerController.healthMax && playerController.health > (playerController.health -1 ))
         {
-            threshold = 0.227f;
+            threshold = 0.15f;
             saturation = 0.75f;
         } 
         else if (playerController.health <= (playerController.healthMax - 1))
         {
-            threshold = 0.05f;
+            threshold = 0.015f;
             saturation = 0.6f;
         }
         else

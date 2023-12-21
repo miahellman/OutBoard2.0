@@ -7,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: blood overlay
-  m_Shader: {fileID: 4800000, guid: 554e64a11a669cb478fdc4175a205f30, type: 3}
+  m_Name: speed ripple
+  m_Shader: {fileID: 4800000, guid: b11f5736512609f49ac096dff779a737, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 4000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -24,15 +24,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _tex:
-        m_Texture: {fileID: 2800000, guid: 9bfbae30c978bc24c87ea4f29dd56dc8, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - _outlineThreshold: 0.26
-    - _softness: 0.388
-    - _threshold: 1
-    m_Colors:
-    - _color: {r: 0.5, g: 0.0070754588, b: 0.0070754588, a: 1}
+    m_Floats: []
+    m_Colors: []
   m_BuildTextureStacks: []

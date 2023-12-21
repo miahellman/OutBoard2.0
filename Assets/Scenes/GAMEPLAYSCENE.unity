@@ -5433,7 +5433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2459070035946595404, guid: 171902e6c3a719d42a180a7af6255860, type: 3}
       propertyPath: maxSpeed
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2459070035946595404, guid: 171902e6c3a719d42a180a7af6255860, type: 3}
       propertyPath: normSpeed
@@ -5457,7 +5457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2459070035946595404, guid: 171902e6c3a719d42a180a7af6255860, type: 3}
       propertyPath: maxSpeedMultiplier
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2459070035946595404, guid: 171902e6c3a719d42a180a7af6255860, type: 3}
       propertyPath: roadAddonsToRender
@@ -11664,6 +11664,7 @@ GameObject:
   - component: {fileID: 1282482056}
   - component: {fileID: 1282482057}
   - component: {fileID: 1282482058}
+  - component: {fileID: 1282482059}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -11847,6 +11848,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1282482050}
   shakeFrequency: 2
+--- !u!114 &1282482059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282482047}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0f6c74251e39474b86ddc60783611a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectMaterial: {fileID: 2100000, guid: 86bd467f85baab1409071cd017e906bf, type: 2}
 --- !u!1 &1342922666 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2459070035946595406, guid: 171902e6c3a719d42a180a7af6255860, type: 3}
@@ -12137,6 +12151,10 @@ PrefabInstance:
     - target: {fileID: 1875714161753982778, guid: da1ee8a6ddb75d9499749f19f2a26e01, type: 3}
       propertyPath: gradualSpeedMultiplier
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875714161753982778, guid: da1ee8a6ddb75d9499749f19f2a26e01, type: 3}
+      propertyPath: centrifugalForceMultiplier
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 1875714161753982779, guid: da1ee8a6ddb75d9499749f19f2a26e01, type: 3}
       propertyPath: m_RootOrder
