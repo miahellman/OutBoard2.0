@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (roadManager.speed >= roadManager.normSpeed)
                 {
-                    roadManager.speed -= speedUpMultiplier;
+                    roadManager.speed -= speedUpMultiplier * 0.5f;
                 }
             }
         }
