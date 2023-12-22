@@ -6,7 +6,8 @@ public class cameraShake : MonoBehaviour
 {
     [Header("Internal Move Variables")]
     [SerializeField] Transform cameraTransform;
-    [SerializeField] float shakeFrequency;
+    
+    public float shakeFrequency;
 
     private Vector3 originalCamPos;
 

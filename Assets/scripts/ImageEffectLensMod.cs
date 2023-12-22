@@ -12,6 +12,8 @@ public class ImageEffectLensMod : MonoBehaviour
     [SerializeField] Material caMat;
     [SerializeField] Material healthMat;
     [SerializeField] Material rippleMat;
+    [SerializeField] Material speedLineMat;
+    [SerializeField] Material shakeMat;
     [SerializeField] PlayerController playerController;
 
     //shader values to edit
@@ -21,6 +23,8 @@ public class ImageEffectLensMod : MonoBehaviour
     string t = "_threshold";
     string s = "_saturation";
     string rs = "_rs";
+    string sli = "_lineIntensity";
+    string ss = "_shakeScale";
 
     //lens shader variable
     float maxDistort = -0.35f;
@@ -35,7 +39,7 @@ public class ImageEffectLensMod : MonoBehaviour
     float saturation = 1f;
 
     //chromatic aberration variables
-    float maxIntensity = 0.03f;
+    float maxIntensity = 0.025f;
     float minIntensity = 0.01f;
     float currentIntensity;
 
@@ -43,9 +47,19 @@ public class ImageEffectLensMod : MonoBehaviour
     float threshold = 1.0f;
 
     //speed ripple
-    float maxRipple = 0.006f;
+    float maxRipple = 0.004f;
     float minRipple = 0.002f;
     float currentRipple;
+
+    //speed lines
+    float maxLine = 0.3f;
+    float minLine = 0.1f;
+    float currentLine;
+
+    //shake scale
+    float maxShake = 0.006f;
+    float minShake = 0.001f;
+    float currentShake;
 
     void Start()
     {
@@ -67,6 +81,8 @@ public class ImageEffectLensMod : MonoBehaviour
         currentIntensity = 0.01f;
         threshold = 1.0f;
         currentRipple = 0.001f;
+        currentLine = 0.1f;
+        currentShake = 0.001f;
 
         saturation = 1f;
     }
@@ -140,6 +156,26 @@ public class ImageEffectLensMod : MonoBehaviour
                 currentRipple += 0.0001f;
             }
 
+            //lines
+            if (currentLine <= maxLine)
+            {
+                currentLine = maxLine;
+            }
+            else
+            {
+                currentLine += 0.00001f;
+            }
+
+            //shake
+            if (currentShake <= maxShake)
+            {
+                currentShake = maxShake;
+            }
+            else
+            {
+                currentShake += 0.0001f;
+            }
+
         } 
         else
         {
@@ -184,10 +220,32 @@ public class ImageEffectLensMod : MonoBehaviour
             {
                 currentRipple = minRipple;
             }
+
+            //lines
+            if (currentLine < minLine)
+            {
+                currentLine -= 0.00001f;
+            }
+            else if (currentLine >= minLine)
+            {
+                currentLine = minLine;
+            }
+
+            //shake
+            if (currentShake < minShake)
+            {
+                currentShake -= 0.00001f;
+            }
+            else if (currentShake >= minShake)
+            {
+                currentShake = minShake;
+            }
         }
 
         //set distortion based on speed
+        shakeMat.SetFloat(ss, currentShake);
         rippleMat.SetFloat(rs, currentRipple);
+        speedLineMat.SetFloat(sli, currentLine);
         lensMat.SetFloat(d, currentDistort);
         vMat.SetFloat(r, currentRadius);
         vMat.SetFloat(s, saturation);

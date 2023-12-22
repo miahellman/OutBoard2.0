@@ -16476,6 +16476,8 @@ GameObject:
   - component: {fileID: 1282482058}
   - component: {fileID: 1282482059}
   - component: {fileID: 1282482055}
+  - component: {fileID: 1282482060}
+  - component: {fileID: 1282482061}
   - component: {fileID: 1282482051}
   m_Layer: 0
   m_Name: Main Camera
@@ -16607,6 +16609,8 @@ MonoBehaviour:
   caMat: {fileID: 2100000, guid: 78be386b3b7bb41d1ae7ada16117fadc, type: 2}
   healthMat: {fileID: 2100000, guid: 1032bd041a244ea40ba65dd4ce456abe, type: 2}
   rippleMat: {fileID: 2100000, guid: 86bd467f85baab1409071cd017e906bf, type: 2}
+  speedLineMat: {fileID: 2100000, guid: 7faf5a14c8086e340ad4fdada3537448, type: 2}
+  shakeMat: {fileID: 2100000, guid: 42ed6bc7c78feb9479b452edac98ac62, type: 2}
   playerController: {fileID: 1691490699}
 --- !u!114 &1282482055
 MonoBehaviour:
@@ -16674,6 +16678,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 86bd467f85baab1409071cd017e906bf, type: 2}
+--- !u!114 &1282482060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282482047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0f6c74251e39474b86ddc60783611a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectMaterial: {fileID: 2100000, guid: 7faf5a14c8086e340ad4fdada3537448, type: 2}
+--- !u!114 &1282482061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282482047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0f6c74251e39474b86ddc60783611a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectMaterial: {fileID: 2100000, guid: 42ed6bc7c78feb9479b452edac98ac62, type: 2}
 --- !u!1 &1342922666 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2459070035946595406, guid: 171902e6c3a719d42a180a7af6255860, type: 3}
@@ -17210,7 +17240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902708035}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5519, y: 0.0144, z: 90}
+  m_LocalPosition: {x: -0.5519, y: 0.0144, z: 99.3}
   m_LocalScale: {x: 21.273968, y: 11.541218, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

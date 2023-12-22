@@ -105,8 +105,14 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.W)) { speedUp = true; }
-        else if (Input.GetKeyUp(KeyCode.W)) { speedUp = false; }
+        if (Input.GetKeyDown(KeyCode.W))
+        { 
+            speedUp = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.W)) 
+        {
+            speedUp = false; 
+        }
         //if (hitObstacle == true) { myAnim.SetBool("hitobstacle", false); }
         else { myAnim.SetBool("hitObstacle", false); }
         #endregion
