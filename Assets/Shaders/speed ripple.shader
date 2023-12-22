@@ -8,6 +8,8 @@
         _mr("Mask Radius", Range(0.0, 1.0)) = 1.0
         _ms("Mask Softness", Range(0.0, 1.0)) = 0.5
 
+        _rs("Ripple Strength", Range(0.0, 0.1)) = 0.001
+
        
     }
 
@@ -31,6 +33,7 @@
 
             float _mr;
             float _ms;
+            float _rs;
 
             struct MeshData
             {
@@ -58,7 +61,7 @@
                 
                float2 uv = i.uv;
 
-                color = tex2D(_MainTex, uv);
+               //color = tex2D(_MainTex, uv);
 
                 //vignette effect
                 float distFromCenter = distance(uv.xy, float2(0.5, 0.5));
@@ -70,7 +73,7 @@
                 //ripple
                 float2 cp = -1.0 + 2.0 * i.vertex.xy / _ScreenParams.xy;
                 float cl = length(cp);
-                uv = (i.vertex.xy / _ScreenParams.xy) + (cp / cl) * cos(cl * 20.0 - _Time.z * 4.0) * 0.02 ;
+                uv = (i.vertex.xy / _ScreenParams.xy) + (cp / cl) * cos(cl * 50.0 - _Time.z * 4.0) * _rs ;
                 float3 color2 = tex2D(_MainTex, uv);
                 
                 //lerp ripple and vignette
@@ -78,7 +81,7 @@
                 //add to image
                 color = saturate(color * output);
 
-                return float4(color, 1.0);
+                return float4(color2, 1.0);
  
             }
             ENDCG

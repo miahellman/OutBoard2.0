@@ -11,33 +11,41 @@ public class ImageEffectLensMod : MonoBehaviour
     [SerializeField] Material vMat;
     [SerializeField] Material caMat;
     [SerializeField] Material healthMat;
+    [SerializeField] Material rippleMat;
     [SerializeField] PlayerController playerController;
 
-    //lens shader variable 
+    //shader values to edit
     string d = "_distortion";
     string r = "_vr";
     string ca = "_intensity";
     string t = "_threshold";
     string s = "_saturation";
+    string rs = "_rs";
 
-    float maxDistort = -0.37f;
+    //lens shader variable
+    float maxDistort = -0.35f;
     float minDistort = -0.25f;
     float currentDistort;
 
     //vignette shader variable
     float maxRadius = 0.73f;
-    float minRadius = 0.83f;
+    float minRadius = 0.79f;
     float currentRadius;
 
     float saturation = 1f;
 
     //chromatic aberration variables
-    float maxIntensity = 0.02f;
+    float maxIntensity = 0.03f;
     float minIntensity = 0.01f;
     float currentIntensity;
 
     //health vars
     float threshold = 1.0f;
+
+    //speed ripple
+    float maxRipple = 0.006f;
+    float minRipple = 0.002f;
+    float currentRipple;
 
     void Start()
     {
@@ -58,6 +66,7 @@ public class ImageEffectLensMod : MonoBehaviour
         currentRadius = 0.809f;
         currentIntensity = 0.01f;
         threshold = 1.0f;
+        currentRipple = 0.001f;
 
         saturation = 1f;
     }
@@ -108,7 +117,7 @@ public class ImageEffectLensMod : MonoBehaviour
             }
             else
             {
-                currentRadius -= 0.005f;
+                currentRadius -= 0.0005f;
             }
 
             //chromatic ab.
@@ -118,7 +127,17 @@ public class ImageEffectLensMod : MonoBehaviour
             }
             else
             {
-                currentIntensity += 0.005f;
+                currentIntensity += 0.000001f;
+            }
+
+            //ripple
+            if (currentRipple <= maxRipple)
+            {
+                currentRipple = maxRipple;
+            }
+            else
+            {
+                currentRipple += 0.0001f;
             }
 
         } 
@@ -139,7 +158,7 @@ public class ImageEffectLensMod : MonoBehaviour
             //vignette
             if (currentRadius < minRadius)
             {
-                currentRadius += 0.005f;
+                currentRadius += 0.0005f;
             }
             else if (currentRadius >= minRadius)
             {
@@ -149,15 +168,26 @@ public class ImageEffectLensMod : MonoBehaviour
             //Chromatic ab
             if (currentIntensity < minIntensity)
             {
-                currentIntensity -= 0.005f;
+                currentIntensity -= 0.00001f;
             }
             else if (currentIntensity >= minIntensity)
             {
                 currentIntensity = minIntensity;
             }
+
+            //ripple
+            if (currentRipple < minRipple)
+            {
+                currentRipple -= 0.00001f;
+            }
+            else if (currentRipple >= minRipple)
+            {
+                currentRipple = minRipple;
+            }
         }
 
         //set distortion based on speed
+        rippleMat.SetFloat(rs, currentRipple);
         lensMat.SetFloat(d, currentDistort);
         vMat.SetFloat(r, currentRadius);
         vMat.SetFloat(s, saturation);

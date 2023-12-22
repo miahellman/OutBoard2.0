@@ -28,7 +28,7 @@ public class SpeedOverlay : MonoBehaviour
         //get percent out of max speed
         speedOp = 1 - (timer.currentSpeed / timer.maxSpeed);
         //at max speed display overlay -- don't display at min speed
-        opacity = (255 * speedOp)/ camIce;
+        opacity = ((255 * speedOp)/ camIce);
 
         overlay.color = new Color(255, 255, 255, opacity);
     }
