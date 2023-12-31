@@ -73,7 +73,8 @@
                 dt.x = sin(_Time.z/10 * uniA.x + uniB.x) * uniScale;
                 dt.y = cos(_Time.z/10 * uniA.y + uniB.y) * uniScale;
 
-                // Output to screen
+                // Output to screen by modifying uv
+                // wobble in circle shape
                 color = tex2D(_MainTex,uv + dt);
  
                 return float4(color, 1.0);

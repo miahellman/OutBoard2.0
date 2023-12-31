@@ -49,11 +49,13 @@
                 return o;
             }
 
+            //rand function
             float rand(float2 p) 
             { 
                 return frac(sin(dot(p,float2(127.1,311.7)))*43758.5453123); 
             }
 
+            //noise
             float noise(float2 p) 
             {
                 float2 i = floor(p); 
@@ -66,12 +68,14 @@
                 return float(a+(b-a)*u.x+(c-a)*u.y+(a-b-c+d)*u.x*u.y)/4.;
             }
 
+            //mirroring obj
             float mirror(float t, float r) 
             {
                 t = frac(t+r);
                 return 2.0*abs(t-0.5);
             }
 
+            //radial noise
             float radialNoise(float t, float d)
             {
                 float2x2 m2 = float2x2(0.90,0.44,-0.44,0.90);
@@ -89,6 +93,7 @@
                 return pow((f1+0.5*f2+0.25*f3+0.125*f4)*3., 1.);
             }
 
+            //add color 
             float3 colorize(float x)
             {
                 x = clamp(x,0.0,1.0);
@@ -113,9 +118,11 @@
                 float v = radialNoise(t, d);
                 v = v * 2.5 - 1.4;
                 v = lerp(0., v, .8 * smoothstep(0.0, 0.8, d));
-                float3 color2 = colorize(v);
+                float3 output = colorize(v);
 
-                color += color2.rrr * _lineIntensity;
+                //add lines to scene w/ line intensity defined in other script
+                //switch to black and white 
+                color += output.rrr * _lineIntensity;
  
                 return float4(color, 1.0);
             }
