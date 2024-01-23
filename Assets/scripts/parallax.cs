@@ -68,7 +68,7 @@ public class parallax : MonoBehaviour
             }
 
 
-            Debug.Log(-roadManager.FindSegment(ZPos).curviness);
+         //   Debug.Log(-roadManager.FindSegment(ZPos).curviness);
         }
 
 

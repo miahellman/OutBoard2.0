@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float hitSpeedTimerMax;
     [SerializeField] float gradualSpeedMultiplier;
     [SerializeField] float timerGradSpeedMax;
+    [SerializeField] float speedUpTimerMax;
+    [SerializeField] float speedUpTimer;
     [SerializeField] AudioSource hitNoise;
     public bool hitObstacle;
 
@@ -30,28 +33,26 @@ public class PlayerController : MonoBehaviour
     // cleanup player INPUT later
 
     private Rigidbody2D myBody;
+    private PlayerInput playerInput; 
+  
 
-    float moveHorizontal;
+    float moveHorizontal = 0f;
     float hitSpeedTimer;
     float timerGradSpeed;
 
     //Player anim parameters
     bool leftPressed = false;
     bool rightPressed = false;
-    /*bool leftHold; 
-    bool rightHold;*/
+    bool canSpeedUp; 
+   
 
     Animator myAnim;
     SpriteRenderer myRend;
-
-
 
     // Start is called before the first frame update
     void Start()
     {
         myBody = gameObject.GetComponent<Rigidbody2D>();
-
-        moveSpeed = 5f;
 
         myAnim = gameObject.GetComponent<Animator>();
         myRend = gameObject.GetComponent<SpriteRenderer>();
@@ -64,8 +65,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        #region move input
-        moveHorizontal = Input.GetAxisRaw("Horizontal"); //we can change this in the Unity settings to controller in the future. 
 
         if (moveHorizontal < 0) // turning left
         {
@@ -103,7 +102,32 @@ public class PlayerController : MonoBehaviour
             myAnim.SetBool("leftHold", false);
             myAnim.SetBool("rightHold", false);
         }
+        
+        //implement speed up 
+        if (!canSpeedUp && speedUpTimer >= 0)
+        {
+            speedUpTimer--;
+        }
+        else if (speedUpTimer <= speedUpTimerMax)
+        {
+            canSpeedUp = true;
+        }
+        if (speedUp)
+        {
+            speedUpTimer++;
+            if (speedUpTimer >= speedUpTimerMax)
+            {
+            
+                speedUp = false;
+                canSpeedUp = false;
+                speedUpTimer = speedUpTimerMax;
+            
+            }
+        }
+      
+        
 
+        /*
 
         if (Input.GetKeyDown(KeyCode.W))
         { 
@@ -115,10 +139,10 @@ public class PlayerController : MonoBehaviour
         }
         //if (hitObstacle == true) { myAnim.SetBool("hitobstacle", false); }
         else { myAnim.SetBool("hitObstacle", false); }
-        #endregion
+        */ 
 
-        //---movement 
-    
+       //NEW INPUT SETTINGS 
+       myBody.velocity = new Vector2(moveHorizontal * moveSpeed, myBody.velocity.y);
     }
     void FixedUpdate()
     {
@@ -134,19 +158,21 @@ public class PlayerController : MonoBehaviour
         else { timerGradSpeed--; }
         #endregion
 
-        #region setSpeed
+        
+        #region implement movement
         Vector2 netHorizontalForce;
         netHorizontalForce = Vector2.zero;
 
 
 
-        if (moveHorizontal > 0f || moveHorizontal < -0f)
+        if (moveHorizontal != 0)
         {
             //myBody.AddForce(new Vector2(moveHorizontal * moveSpeed, 0f), ForceMode2D.Impulse); 
             // not using Time.Delta time beacause AddForce has it applied by default. 
             netHorizontalForce += new Vector2(moveHorizontal * moveSpeed, 0f);
         }
         #endregion
+        
 
         #region norm speed
         if (!hitObstacle)
@@ -179,6 +205,7 @@ public class PlayerController : MonoBehaviour
                 roadManager.speed = hitSpeed;
                 camShake.CameraShake();
                 myAnim.SetBool("hitAnim", true);
+                speedUpTimer = speedUpTimerMax;
                 hitSpeedTimer--;
                 
             }
@@ -193,14 +220,16 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
 
+        /* OLD INPUT SETTINGS 
         #region apply speed
 
+       
         float ZPos = roadManager.ZPos;
         if (roadManager.FindSegment(ZPos).curviness != 0)
         {
             //myBody.AddForce(new Vector2(-roadManager.FindSegment(ZPos).curviness * centrifugalForceMultiplier, 0f), ForceMode2D.Impulse);
 
-
+            
             //This little bit is what we added!
             if (roadManager.FindSegment(ZPos).index > roadManager.segmentToCalculateLoopAt)
             {
@@ -216,7 +245,9 @@ public class PlayerController : MonoBehaviour
         }
 
         myBody.AddForce(netHorizontalForce, ForceMode2D.Impulse);
+        
         #endregion
+        */
 
     }
 
@@ -228,4 +259,17 @@ public class PlayerController : MonoBehaviour
             hitSpeedTimer = hitSpeedTimerMax;
         }
     }
+
+    public void Move (InputAction.CallbackContext context)
+    {
+        moveHorizontal = context.ReadValue<Vector2>().x; //NEW INPUT SETTINGS 
+    }
+    public void Speedup (InputAction.CallbackContext context)
+    {
+        if (context.performed && canSpeedUp)
+        {
+            speedUp = true;
+        }
+    }
+
 }

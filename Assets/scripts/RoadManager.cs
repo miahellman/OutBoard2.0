@@ -466,7 +466,7 @@ public class RoadManager : MonoBehaviour
 
         Segment baseSegment = FindSegment(ZPos);
 
-        Debug.Log("Time: " + Time.realtimeSinceStartup + " , Segment: " + baseSegment.index);
+       // Debug.Log("Time: " + Time.realtimeSinceStartup + " , Segment: " + baseSegment.index);
 
         float basePercent = 1- ((ZPos % segmentLength) / segmentLength);
 
