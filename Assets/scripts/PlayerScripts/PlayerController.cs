@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     public float healthMax;
     public float health;
     public bool speedUp;
-    // cleanup player INPUT later
 
     private Rigidbody2D myBody;
 
@@ -45,7 +44,7 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer myRend;
 
 
-
+  
     // Start is called before the first frame update
     void Start()
     {
