@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.anyKey)
         {
             if (SceneManager.GetActiveScene().name == "MENU")
             {

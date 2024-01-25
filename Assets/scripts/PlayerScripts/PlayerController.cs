@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
     public float healthMax;
     public float health;
     public bool speedUp;
-    public float playerPosBuffer;
 
     [Header ("Private Variables")]
     float hitSpeedTimer;
@@ -74,13 +73,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveAnim();
-        //---movement 
+        MoveAnim(); 
         MoveInput();
     }
     void FixedUpdate()
     {
-        playerPosBuffer = 3 + transform.position.x; // bigger hitbox for player to hit speedup with touch controls
         playerMove();
 
         #region gradual speed up
@@ -191,7 +188,6 @@ public class PlayerController : MonoBehaviour
         //apply movement to rigid body
         myBody.velocity = new Vector3(moveSpeed, 0f, 0f);
     }
-
     public void MoveInput()
     {
         //HORIZONTAL
@@ -214,7 +210,7 @@ public class PlayerController : MonoBehaviour
             canSpeed = true;
         }
 
-        if (canSpeed && (Input.GetKeyDown(KeyCode.W) || (Input.GetMouseButton(0) && ((mousePos.x <= playerPosBuffer) && (mousePos.x >= -playerPosBuffer)))))
+        if (canSpeed && (Input.GetKeyDown(KeyCode.W) || (Input.GetMouseButton(0) && ((mousePos.x < rightScreen.position.x) && (mousePos.x > leftScreen.position.x)))))
         {
             speedUp = true;
             canSpeed = false;
