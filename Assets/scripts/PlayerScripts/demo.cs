@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,56 +8,67 @@ public class demo : MonoBehaviour
 {
     [Header("Input Buttons and Keys")]
     public KeyCode KeyRight;
-    public Button ButtRight;
     public KeyCode KeyLeft;
-    public Button ButtLeft;
     public KeyCode KeyUp;
-    public Button ButtUp;
-
+   
     public int HorzMovement;
-    public float moveSpeed = 5; 
+    public float speed = 5f;
 
+    [Header("Player External")]
+    public Rigidbody2D myBody;
+    public Transform leftScreen;
+    public Transform rightScreen;
+    
+    float moveSpeed;
+    float horzIncriment = .75f;
+
+    bool TouchRight; 
+    bool TouchLeft;
     // Start is called before the first frame update
     void Start()
     {
+        myBody = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+     
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        MoveInput();
+        playerMove(); 
+    }
+
+    public void playerMove ()
+    {   
+        //Slidey movement
+        if (moveSpeed < speed*HorzMovement) { moveSpeed += horzIncriment; } 
+        else if (moveSpeed > speed*HorzMovement) { moveSpeed-= horzIncriment; } 
+
+        //apply movement to rigid body
+        myBody.velocity = new Vector3(moveSpeed, 0f, 0f);
+    }
+
+    public void MoveInput()
+    {
         //Get Input && Define HorzMovement
-        if ((Input.GetKey(KeyRight)) || (Input.GetButton("ButtRight")) /* || touch controls */) //right input
+        HorzMovement = 0; //defaults to zero
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); //convert mouse position from screed cord. to word cord. 
+        if (Input.GetKey(KeyRight) || /*TouchInput*/ (Input.GetMouseButton(0) && (mousePos.x > rightScreen.position.x))) //right input
         {
             HorzMovement = 1;
         }
 
-        else if ((Input.GetKey(KeyLeft)) || (Input.GetButton("ButtLeft")) /* || touch controls */) //left input
+        if (Input.GetKey(KeyLeft) || /*TouchInput*/ (Input.GetMouseButton(0) && (mousePos.x < leftScreen.position.x))) //left input
         {
             HorzMovement = -1;
         }
-        else
-        {
-            HorzMovement = 0;
-        }
-        /*speedup input here */
 
-        
-
+        playerMove();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        playerMove(); 
-    }
-
-    void playerMove () 
-    {
-        //Apply Movement Speed
-        Vector2 netHorizontalForce;
-        netHorizontalForce = Vector2.zero;
-
-
-        if (HorzMovement > 0f || HorzMovement < -0f)
-        {
-            //myBody.AddForce(new Vector2(moveHorizontal * moveSpeed, 0f), ForceMode2D.Impulse); 
-            // not using Time.Delta time beacause AddForce has it applied by default. 
-            netHorizontalForce += new Vector2(HorzMovement * moveSpeed, 0f);
-        }
-    }
+   
 }
