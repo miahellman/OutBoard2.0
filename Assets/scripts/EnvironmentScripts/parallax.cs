@@ -68,7 +68,11 @@ public class parallax : MonoBehaviour
             }
 
 
+<<<<<<< HEAD:Assets/scripts/EnvironmentScripts/parallax.cs
             //Debug.Log(-roadManager.FindSegment(ZPos).curviness);
+=======
+         //   Debug.Log(-roadManager.FindSegment(ZPos).curviness);
+>>>>>>> main:Assets/scripts/parallax.cs
         }
 
 

@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float hitSpeedTimerMax;
     [SerializeField] float gradualSpeedMultiplier;
     [SerializeField] float timerGradSpeedMax;
+    [SerializeField] float speedUpTimerMax;
+    [SerializeField] float speedUpTimer;
     [SerializeField] AudioSource hitNoise;
     public bool hitObstacle;
 
@@ -43,20 +46,36 @@ public class PlayerController : MonoBehaviour
     public float health;
     public bool speedUp;
 
+<<<<<<< HEAD:Assets/scripts/PlayerScripts/PlayerController.cs
     [Header ("Private Variables")]
+=======
+    private Rigidbody2D myBody;
+    private PlayerInput playerInput; 
+  
+
+    float moveHorizontal = 0f;
+>>>>>>> main:Assets/scripts/PlayerController.cs
     float hitSpeedTimer;
     float timerGradSpeed;
     float moveSpeed;
     //Player anim parameters
     bool leftPressed = false;
     bool rightPressed = false;
+<<<<<<< HEAD:Assets/scripts/PlayerScripts/PlayerController.cs
+=======
+    bool canSpeedUp; 
+   
+>>>>>>> main:Assets/scripts/PlayerController.cs
 
     Animator myAnim;
 
     SpriteRenderer myRend;
 
+<<<<<<< HEAD:Assets/scripts/PlayerScripts/PlayerController.cs
 
   
+=======
+>>>>>>> main:Assets/scripts/PlayerController.cs
     // Start is called before the first frame update
     void Start()
     {
@@ -73,8 +92,89 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD:Assets/scripts/PlayerScripts/PlayerController.cs
         MoveAnim(); 
         MoveInput();
+=======
+
+        if (moveHorizontal < 0) // turning left
+        {
+            myAnim.SetBool("leftHold", true); // continues to hold button down, transitions to holding anim 
+            if (leftPressed == false) // first frame
+            {
+                leftPressed = true;
+                myAnim.SetTrigger("leftPressed"); // anim activated one time 
+            }
+            rightPressed = false;
+            myAnim.SetBool("rightHold", false);
+            myAnim.ResetTrigger("rightPressed");
+            //myAnim.ResetTrigger("leftPressed");
+        }
+        else if (moveHorizontal > 0) // turning right
+        {
+            myAnim.SetBool("rightHold", true); // continues to hold button down, transitions to holding anim 
+            if (rightPressed == false) // first frame
+            {
+                rightPressed = true;
+                myAnim.SetTrigger("rightPressed"); // anim activated one time 
+            }
+            leftPressed = false;
+            myAnim.SetBool("leftHold", false);
+            //myAnim.ResetTrigger("rightPressed");
+            myAnim.ResetTrigger("leftPressed");
+
+        }
+        else if (moveHorizontal == 0) //reset all values/directions 
+        {
+            leftPressed = false;
+            rightPressed = false;
+            myAnim.ResetTrigger("rightPressed");
+            myAnim.ResetTrigger("leftPressed");
+            myAnim.SetBool("leftHold", false);
+            myAnim.SetBool("rightHold", false);
+        }
+        
+        //implement speed up 
+        if (!canSpeedUp && speedUpTimer >= 0)
+        {
+            speedUpTimer--;
+        }
+        else if (speedUpTimer <= speedUpTimerMax)
+        {
+            canSpeedUp = true;
+        }
+        if (speedUp)
+        {
+            speedUpTimer++;
+            if (speedUpTimer >= speedUpTimerMax)
+            {
+            
+                speedUp = false;
+                canSpeedUp = false;
+                speedUpTimer = speedUpTimerMax;
+            
+            }
+        }
+      
+        
+
+        /*
+
+        if (Input.GetKeyDown(KeyCode.W))
+        { 
+            speedUp = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.W)) 
+        {
+            speedUp = false; 
+        }
+        //if (hitObstacle == true) { myAnim.SetBool("hitobstacle", false); }
+        else { myAnim.SetBool("hitObstacle", false); }
+        */ 
+
+       //NEW INPUT SETTINGS 
+       myBody.velocity = new Vector2(moveHorizontal * moveSpeed, myBody.velocity.y);
+>>>>>>> main:Assets/scripts/PlayerController.cs
     }
     void FixedUpdate()
     {
@@ -92,6 +192,25 @@ public class PlayerController : MonoBehaviour
         else { timerGradSpeed--; }
         #endregion
 
+<<<<<<< HEAD:Assets/scripts/PlayerScripts/PlayerController.cs
+=======
+        
+        #region implement movement
+        Vector2 netHorizontalForce;
+        netHorizontalForce = Vector2.zero;
+
+
+
+        if (moveHorizontal != 0)
+        {
+            //myBody.AddForce(new Vector2(moveHorizontal * moveSpeed, 0f), ForceMode2D.Impulse); 
+            // not using Time.Delta time beacause AddForce has it applied by default. 
+            netHorizontalForce += new Vector2(moveHorizontal * moveSpeed, 0f);
+        }
+        #endregion
+        
+
+>>>>>>> main:Assets/scripts/PlayerController.cs
         #region norm speed
         if (!hitObstacle)
         {
@@ -123,6 +242,7 @@ public class PlayerController : MonoBehaviour
                 roadManager.speed = hitSpeed;
                 camShake.CameraShake();
                 myAnim.SetBool("hitAnim", true);
+                speedUpTimer = speedUpTimerMax;
                 hitSpeedTimer--;
                 
             }
@@ -137,16 +257,22 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
 
+<<<<<<< HEAD:Assets/scripts/PlayerScripts/PlayerController.cs
         /* Centrifugal Force
         #region apply centrifugal force
+=======
+        /* OLD INPUT SETTINGS 
+        #region apply speed
+>>>>>>> main:Assets/scripts/PlayerController.cs
 
+       
         float ZPos = roadManager.ZPos;
         
         if (roadManager.FindSegment(ZPos).curviness != 0)
         {
             //myBody.AddForce(new Vector2(-roadManager.FindSegment(ZPos).curviness * centrifugalForceMultiplier, 0f), ForceMode2D.Impulse);
 
-
+            
             //This little bit is what we added!
 
             
@@ -164,9 +290,16 @@ public class PlayerController : MonoBehaviour
         }
 
         myBody.AddForce(netHorizontalForce, ForceMode2D.Impulse);
+<<<<<<< HEAD:Assets/scripts/PlayerScripts/PlayerController.cs
             
         #endregion
         */
+=======
+        
+        #endregion
+        */
+
+>>>>>>> main:Assets/scripts/PlayerController.cs
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -178,6 +311,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD:Assets/scripts/PlayerScripts/PlayerController.cs
     public void playerMove()
     {
         //Slidey movement
@@ -270,6 +404,18 @@ public class PlayerController : MonoBehaviour
         }
         //if (hitObstacle == true) { myAnim.SetBool("hitobstacle", false); }
         else { myAnim.SetBool("hitObstacle", false); }
+=======
+    public void Move (InputAction.CallbackContext context)
+    {
+        moveHorizontal = context.ReadValue<Vector2>().x; //NEW INPUT SETTINGS 
+    }
+    public void Speedup (InputAction.CallbackContext context)
+    {
+        if (context.performed && canSpeedUp)
+        {
+            speedUp = true;
+        }
+>>>>>>> main:Assets/scripts/PlayerController.cs
     }
 
 }
